@@ -499,43 +499,6 @@
             color: #999;
         }
 
-        .summary-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background-color: #00b14f;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #009640;
-        }
-
-        .btn-secondary {
-            background-color: white;
-            color: #666;
-            border: 1px solid #ddd;
-        }
-
-        .btn-secondary:hover {
-            background-color: #f5f5f5;
-        }
 
         /* Toast notification */
         .toast {
@@ -639,16 +602,6 @@
                     </table>
                 </div>
 
-                <div class="summary-actions">
-                    <button class="btn btn-primary" id="copy-json-btn">
-                        <span>📋</span>
-                        <span>Copy JSON</span>
-                    </button>
-                    <button class="btn btn-secondary" id="reset-btn">
-                        <span>🔄</span>
-                        <span>Reset to Defaults</span>
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -697,8 +650,6 @@
         const summaryMcc = document.getElementById('summary-mcc');
         const productsTbody = document.getElementById('products-tbody');
         const summaryTbody = document.getElementById('summary-tbody');
-        const copyJsonBtn = document.getElementById('copy-json-btn');
-        const resetBtn = document.getElementById('reset-btn');
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toast-message');
 
@@ -765,60 +716,6 @@
             });
         }
 
-        // Show toast notification
-        function showToast(message, duration = 3000) {
-            toastMessage.textContent = message;
-            toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, duration);
-        }
-
-        // Copy JSON to clipboard
-        async function copyJsonToClipboard() {
-            const exportData = {
-                mcc: config.mcc,
-                products: products.map(p => ({
-                    id: p.id,
-                    enabled: p.enabled,
-                    bundle: p.bundle,
-                    pf: p.pfWaiver,
-                    fee: p.fee
-                }))
-            };
-            
-            try {
-                await navigator.clipboard.writeText(JSON.stringify(exportData, null, 2));
-                showToast('✓ JSON copied to clipboard!');
-                console.log('Copied JSON:', exportData);
-            } catch (err) {
-                console.error('Failed to copy JSON:', err);
-                showToast('❌ Failed to copy JSON', 2000);
-            }
-        }
-
-        // Reset to defaults
-        function resetToDefaults() {
-            // Reset MCC
-            config.mcc = initialDefaults.mcc;
-            mccSelect.value = config.mcc;
-            summaryMcc.textContent = config.mcc;
-            
-            // Reset products to initial defaults
-            products.length = 0; // Clear array
-            initialDefaults.products.forEach(p => {
-                products.push(JSON.parse(JSON.stringify(p)));
-            });
-            
-            // Re-render everything
-            renderProducts();
-            renderSummary();
-            dispatchConfigUpdate();
-            
-            showToast('🔄 Configuration reset to defaults');
-            console.log('Configuration reset to defaults');
-        }
 
         // Render product rows
         function renderProducts() {
@@ -1040,10 +937,6 @@
         document.addEventListener('config:update', (event) => {
             console.log('Configuration updated:', event.detail.config);
         });
-
-        // Event listeners for action buttons
-        copyJsonBtn.addEventListener('click', copyJsonToClipboard);
-        resetBtn.addEventListener('click', resetToDefaults);
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
