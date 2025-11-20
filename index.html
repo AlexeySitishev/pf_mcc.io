@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCC Configuration</title>
+    <title>Merchant Group Configuration</title>
     
     <!--
     ============================================================================
-    MCC CONFIGURATION TOOL - CONFLUENCE EMBEDDING GUIDE
+    MERCHANT GROUP CONFIGURATION TOOL - CONFLUENCE EMBEDDING GUIDE
     ============================================================================
     
-    This is a self-contained HTML file for configuring MCC (Merchant Category Code)
+    This is a self-contained HTML file for configuring Merchant Group
     and product processing fees. It requires NO external dependencies or CDN links.
     
     ============================================================================
@@ -29,11 +29,11 @@
     OPTION 2: IFRAME EMBEDDING (IF HTML MACRO IS RESTRICTED)
     ============================================================================
     
-    1. Save this file as "mcc-configuration.html"
+    1. Save this file as "merchant-group-configuration.html"
     2. Upload to a static file hosting service or your web server
     3. In Confluence, use the "HTML" macro with iframe:
     
-       <iframe src="https://your-domain.com/mcc-configuration.html" 
+       <iframe src="https://your-domain.com/merchant-group-configuration.html" 
                width="100%" 
                height="1200px" 
                frameborder="0"
@@ -49,7 +49,7 @@
     1. Upload this file as an attachment to your Confluence page
     2. Use the "HTML" macro with iframe pointing to the attachment:
     
-       <iframe src="/download/attachments/[PAGE_ID]/mcc-configuration.html" 
+       <iframe src="/download/attachments/[PAGE_ID]/merchant-group-configuration.html" 
                width="100%" 
                height="1200px" 
                frameborder="0">
@@ -61,7 +61,7 @@
     FEATURES
     ============================================================================
     
-    - MCC Selector: Choose between Default and Fashion
+    - Merchant Group Selector: Choose between Default and Fashion
     - Product Configuration: Enable/disable products (Postpaid, 3/7/11 months)
     - Grab Bundle: Toggle bundle per product
     - PF Waiver: Select waiver percentage (0% to 100%)
@@ -570,12 +570,12 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header with MCC Selector -->
+        <!-- Header with Merchant Group Selector -->
         <div class="header">
-            <h1>MCC Configuration</h1>
+            <h1>Merchant Group Configuration</h1>
             <div class="mcc-selector">
-                <label for="mcc-select">MCC:</label>
-                <select id="mcc-select" aria-label="Select Merchant Category Code">
+                <label for="mcc-select">Merchant Group:</label>
+                <select id="mcc-select" aria-label="Select Merchant Group">
                     <option value="Default">Default</option>
                     <option value="Fashion">Fashion</option>
                 </select>
@@ -596,7 +596,7 @@
                     <tr>
                         <th rowspan="2">Product</th>
                         <th rowspan="2">Availability</th>
-                        <th colspan="3" style="text-align: center; border-right: 2px solid #e0e0e0;">MCC Grab Bundle</th>
+                        <th colspan="3" style="text-align: center; border-right: 2px solid #e0e0e0;">Merchant Group Grab Bundle</th>
                         <th colspan="2" style="text-align: center;">Merchant Promo Default Settings</th>
                     </tr>
                     <tr>
@@ -618,7 +618,7 @@
             <h2>Configuration Summary</h2>
             <div class="summary-content">
                 <div class="summary-mcc-section">
-                    <span class="summary-label">Selected MCC:</span>
+                    <span class="summary-label">Selected Merchant Group:</span>
                     <span class="mcc-badge" id="summary-mcc">Default</span>
                 </div>
                 
@@ -653,7 +653,7 @@
 
     <script>
         /**
-         * MCC Configuration Tool
+         * Merchant Group Configuration Tool
          * 
          * This script is wrapped in an IIFE (Immediately Invoked Function Expression)
          * to prevent global namespace pollution and avoid conflicts with other scripts
@@ -1046,7 +1046,7 @@
             document.dispatchEvent(configUpdateEvent);
         }
 
-        // Handle MCC change
+        // Handle Merchant Group change
         mccSelect.addEventListener('change', (event) => {
             const newMcc = event.target.value;
             config.mcc = newMcc;
@@ -1057,7 +1057,7 @@
             // Dispatch config update
             dispatchConfigUpdate();
             
-            console.log('MCC changed to:', newMcc);
+            console.log('Merchant Group changed to:', newMcc);
         });
 
         // Listen for config updates (for debugging/extensibility)
@@ -1067,7 +1067,7 @@
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('MCC Configuration initialized');
+            console.log('Merchant Group Configuration initialized');
             renderProducts();
             renderSummary();
         });
